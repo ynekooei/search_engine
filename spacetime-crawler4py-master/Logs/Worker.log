@@ -1,0 +1,5 @@
+2021-01-22 13:24:25,498 - Worker-0 - INFO - Downloaded https://www.stat.uci.edu, status <200>, using cache ('styx.ics.uci.edu', 9002).
+2021-01-22 13:24:26,061 - Worker-0 - INFO - Downloaded https://www.informatics.uci.edu, status <200>, using cache ('styx.ics.uci.edu', 9002).
+2021-01-22 13:24:26,612 - Worker-0 - INFO - Downloaded https://www.cs.uci.edu, status <200>, using cache ('styx.ics.uci.edu', 9002).
+2021-01-22 13:24:27,163 - Worker-0 - INFO - Downloaded https://www.ics.uci.edu, status <200>, using cache ('styx.ics.uci.edu', 9002).
+2021-01-22 13:24:27,665 - Worker-0 - INFO - Frontier is empty. Stopping Crawler.
