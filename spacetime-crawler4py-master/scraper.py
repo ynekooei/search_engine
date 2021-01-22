@@ -14,6 +14,8 @@ def extract_next_links(url, resp):
 def is_valid(url):
     try:
         parsed = urlparse(url)
+        #check if netloc matches list of urls
+        #make sure file size isn't too big
         if parsed.scheme not in set(["http", "https"]):
             return False
         return not re.match(
