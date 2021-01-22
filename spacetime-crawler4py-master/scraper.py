@@ -3,10 +3,12 @@ from urllib.parse import urlparse
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
+    #defragment the URLs
     return [link for link in links if is_valid(link)]
 
 def extract_next_links(url, resp):
-    # Implementation requred.
+    # Implementation required.
+    #use BEAUTIFULSOUP OR LXML to extract links in the current URL
     return list()
 
 def is_valid(url):
