@@ -1,29 +1,32 @@
 import re
 from urllib.parse import urlparse
-
 from bs4 import BeautifulSoup
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
-    #defragment the URLs
+    
     return [link for link in links if is_valid(link)]
+    
 
 def extract_next_links(url, resp):
-    # Implementation required.
-    #use BEAUTIFULSOUP OR LXML to extract links in the current URL
-    print (url)
+    # Implementation requred.
+    list = []
     #print(resp.raw_response.text[0:500])
+    if resp.raw_response is None:
+        return list
     soup = BeautifulSoup(resp.raw_response.content, 'html5lib')
     #print(soup.prettify())
-    for a in soup.find_all('a', href=True): # gets all urls from current page
-        print ("Found the URL:", a['href'])
-    return list()
+    #for a in soup.find_all('a', href=True):
+     #   print ("Found the URL:", a['href'])
+    
+    for a in soup.find_all('a', href=True):
+        list.append(a['href'])
+    return list
 
 def is_valid(url):
     try:
         parsed = urlparse(url)
-        #check if netloc matches list of urls
-        #make sure file size isn't too big
+        
         if parsed.scheme not in set(["http", "https"]):
             return False
         return not re.match(
