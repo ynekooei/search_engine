@@ -16,7 +16,7 @@ def scraper(url, resp):
             #print(text)
             #tokenize the words (call tokenize function from assignment1)
             result.append(link)
-    return 
+    return result
     
 
 def extract_next_links(url, resp):
