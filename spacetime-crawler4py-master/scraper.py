@@ -1,11 +1,22 @@
 import re
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+#import tokenizer
+
+
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
-    
-    return [link for link in links if is_valid(link)]
+    result =[]
+    for link in links:
+        if is_valid(link):
+            #figure out how to extract 'valuable' text
+            #soup2 = BeautifulSoup(resp.raw_response.content, 'html5lib')
+            #text = soup2.find_all("p")
+            #print(text)
+            #tokenize the words (call tokenize function from assignment1)
+            result.append(link)
+    return 
     
 
 def extract_next_links(url, resp):
@@ -15,12 +26,15 @@ def extract_next_links(url, resp):
     if resp.raw_response is None:
         return list
     soup = BeautifulSoup(resp.raw_response.content, 'html5lib')
+
     #print(soup.prettify())
     #for a in soup.find_all('a', href=True):
      #   print ("Found the URL:", a['href'])
     
     for a in soup.find_all('a', href=True):
         list.append(a['href'])
+
+    
     return list
 
 def is_valid(url):
@@ -29,10 +43,21 @@ def is_valid(url):
         
         if parsed.scheme not in set(["http", "https"]):
             return False
+        
+        #check for HTML status code:
+        # less than 200 -> ERROR1
+        # 200 to 399(inclusive) -> OK
+        # 400+ -> ERROR2
+        
+
+
         #check if the domain (netloc) and path are valid (match the 5 expected URLds)
-        if (not (re.match(r"(.+\.ics\.uci\.edu$)|(.+\.cs\.uci\.edu$)" | r"|(.+\.informatics\.uci\.edu$)|(.+\.stat\.uci\.edu$)", parsed.netloc)
-            | (re.match(r"^today\.uci\.edu$", parsed.netloc) & re.match(r"\/department\/information_computer_sciences(\/.+|$)", parsed.path)))):
+        if (not (re.match(r"(.+\.ics\.uci\.edu$)|(.+\.cs\.uci\.edu$)"
+                + r"|(.+\.informatics\.uci\.edu$)|(.+\.stat\.uci\.edu$)", parsed.netloc)
+            or (re.match(r"^today\.uci\.edu$", parsed.netloc) and 
+                re.match(r"\/department\/information_computer_sciences(\/.+|$)", parsed.path)))):
             return False
+        
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
