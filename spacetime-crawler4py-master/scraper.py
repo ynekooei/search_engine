@@ -13,6 +13,7 @@ def scraper(url, resp):
         # less than 200 -> ERROR1
         # 200 to 399(inclusive) -> OK
         # 400+ -> ERROR2
+    #if ((resp.status < 200) or (resp.status > 399)) -> return false/pass?
     links = extract_next_links(url, resp)
     result =[]
     soup2 = BeautifulSoup(resp.raw_response.content, 'html5lib')
