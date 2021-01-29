@@ -29,6 +29,10 @@ def is_valid(url):
         
         if parsed.scheme not in set(["http", "https"]):
             return False
+        #check if the domain (netloc) and path are valid (match the 5 expected URLds)
+        if (not (re.match(r"(.+\.ics\.uci\.edu$)|(.+\.cs\.uci\.edu$)" | r"|(.+\.informatics\.uci\.edu$)|(.+\.stat\.uci\.edu$)", parsed.netloc)
+            | (re.match(r"^today\.uci\.edu$", parsed.netloc) & re.match(r"\/department\/information_computer_sciences(\/.+|$)", parsed.path)))):
+            return False
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
