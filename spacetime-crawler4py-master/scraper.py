@@ -9,14 +9,14 @@ from collections import defaultdict
 import pickle
 
 def scraper(url, resp):
-    #check for HTML status code:
     #  we can only check current url since we have current response and status code for that url only
-        # less than 200 -> ERROR1
-        # 200 to 399(inclusive) -> OK
-        # 400+ -> ERROR2
-    #if ((resp.status < 200) or (resp.status > 399)) -> return false/pass?
+
     links = extract_next_links(url, resp)
     result =[]
+    
+    if ((resp.status < 200) or (resp.status > 399)):
+        return result
+    
     soup2 = BeautifulSoup(resp.raw_response.content, 'html5lib')
     # get title 
     text = soup2.title.get_text()
