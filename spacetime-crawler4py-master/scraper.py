@@ -5,7 +5,8 @@ from bs4 import BeautifulSoup
 from nltk.tokenize import RegexpTokenizer
 import nltk
 nltk.download('stopwords')
-
+from collections import defaultdict
+import pickle
 
 def scraper(url, resp):
     #check for HTML status code:
@@ -32,8 +33,29 @@ def scraper(url, resp):
         if word not in stopwords:
             valid_words.append(word.lower())
     
-    # PUT valid words length and current url stats in website stat file
+    # compute hash (simhash) using valid_words and check againsts previous hashes for page similarity
+    # if the same then return empty list otherwise, proceed        
+    
+    # put valid words length and current url stats in website stat file
+    
+    
+    word_frequency = defaultdict(int)
+    #load word frequencies using pickle
+    #with open('stats_word_frequency', 'rb') as handle:
+        #word_frequency = pickle.load(handle)
 
+    #update word_frequency file 
+    for word in valid_words: 
+        word_frequency[word] += 1
+
+
+    
+    #store word_frequency into file
+    #with open('stats_word_frequency', 'wb') as handle:
+        #pickle.dump(word_frequency, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    #with open('stats_word_frequency', 'rb') as handle:
+        #word_frequency = pickle.load(handle)
 
     
     for link in links:
