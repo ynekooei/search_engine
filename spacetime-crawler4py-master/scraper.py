@@ -52,24 +52,24 @@ def scraper(url, resp):
     with open('stats_word_count.pickle', 'wb') as handle:
         pickle.dump(url_word_length, handle, protocol=pickle.HIGHEST_PROTOCOL)
     #uniquesubdomain dictionary
-    unique_subdomains = defaultdict(int)
+    unique_domains = defaultdict(int)
     try:
         with open('unique_domains.pickle', 'rb') as handle:
-            unique_subdomains = pickle.load(handle)
+            unique_domains = pickle.load(handle)
     except (OSError, IOError) as e:
-       pickle.dump(unique_subdomains, open('unique_domains', "wb"))
+       pickle.dump(unique_domains, open('unique_domains', "wb"))
     #regular expression 
     matchObject = re.match(r"^.+//(.+\.ics\.uci\.edu)((\/.*)|$)", url)
     if (matchObject != None):
-        if(matchObject.group(1) not in unique_subdomains):
-            unique_subdomains[matchObject.group(1)] = 1
+        if(matchObject.group(1) not in unique_domains):
+            unique_domains[matchObject.group(1)] = 1
         else:
-            unique_subdomains[matchObject.group(1)] += 1
+            unique_domains[matchObject.group(1)] += 1
 
         
 
     with open('unique_domains.pickle', 'wb') as handle:
-        pickle.dump(unique_subdomains, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump(unique_domains, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     word_frequency = defaultdict(int)
     #load word frequencies using pickle
