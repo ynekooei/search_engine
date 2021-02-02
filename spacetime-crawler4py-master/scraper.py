@@ -128,7 +128,12 @@ def is_valid(url):
 
 
         if (re.match(r"^evoke.ics.uci.edu", parsed.netloc) and re.search(r"replytocom=[a-zA-Z0-9]+(\/$|$)", parsed.query)):
-            return False    
+            return False  
+        
+        #to avoid the calendar trap: calendar.ics.uci.edu OR http://calendar.ics.uci.edu/calendar.php?type=month&calendar=1&category=&month=02&year=2013
+        # (CHECK) ??
+        if (re.match(r"calendar\.ics\.uci\.edu",parsed.netloc)):
+            return False
         
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
