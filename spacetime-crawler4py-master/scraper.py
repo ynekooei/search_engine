@@ -52,22 +52,6 @@ def scraper(url, resp):
     with open('stats_word_count.pickle', 'wb') as handle:
         pickle.dump(url_word_length, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
-    #uniquesubdomain dictionary
-    unique_subdomains = defaultdict(int)
-    try:
-        with open('unique_domains.pickle', 'rb') as handle:
-            unique_subdomains = pickle.load(handle)
-    except (OSError, IOError) as e:
-       pickle.dump(unique_subdomains, open('unique_domains', "wb"))
-    #regular expression 
-    
-        #if in dictionary then increment count
-        #else insert into dictionary with value of 1
-
-    with open('unique_domains.pickle', 'wb') as handle:
-        pickle.dump(unique_subdomains, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    
-
 
     word_frequency = defaultdict(int)
     #load word frequencies using pickle
@@ -81,26 +65,32 @@ def scraper(url, resp):
     for word in valid_words: 
         word_frequency[word] += 1
 
-
-    
     #store word_frequency into file
     with open('stats_word_frequency.pickle', 'wb') as handle:
         pickle.dump(word_frequency, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     #with open('stats_word_frequency', 'rb') as handle:
         #word_frequency = pickle.load(handle)
-
-
     
+    uniqueURLS={}
+    try:
+        with open('unique_urls.pickle', 'rb') as handle:
+            uniqueURLS = pickle.load(handle)
+    except (OSError, IOError) as e:
+       pickle.dump(uniqueURLS, open('unique_urls.pickle', "wb"))
+
     for link in links:
         if is_valid(link):
             # remove link fragments
             new_link= link.split('#')[0]
-            
-            
+            uniqueURLS.add(new_link)
             #print(text)
             #tokenize the words (call tokenize function from assignment1)
             result.append(new_link)
+    
+    with open('unique_urls.pickle', 'wb') as handle:
+        pickle.dump(uniqueURLS, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
     return result
     
 
