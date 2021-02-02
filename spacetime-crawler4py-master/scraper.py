@@ -52,6 +52,20 @@ def scraper(url, resp):
     with open('stats_word_count.pickle', 'wb') as handle:
         pickle.dump(url_word_length, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
+    #uniquesubdomain dictionary
+    unique_subdomains = defaultdict(int)
+    try:
+        with open('unique_domains.pickle', 'rb') as handle:
+            unique_subdomains = pickle.load(handle)
+    except (OSError, IOError) as e:
+       pickle.dump(unique_subdomains, open('unique_domains', "wb"))
+    #regular expression 
+    
+        #if in dictionary then increment count
+        #else insert into dictionary with value of 1
+
+    with open('unique_domains.pickle', 'wb') as handle:
+        pickle.dump(unique_subdomains, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
 
 
