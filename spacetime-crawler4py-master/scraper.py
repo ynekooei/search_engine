@@ -90,7 +90,7 @@ def scraper(url, resp):
     #with open('stats_word_frequency', 'rb') as handle:
         #word_frequency = pickle.load(handle)
     
-    uniqueURLS={}
+    uniqueURLS=defaultdict(int)
     try:
         with open('unique_urls.pickle', 'rb') as handle:
             uniqueURLS = pickle.load(handle)
@@ -101,7 +101,7 @@ def scraper(url, resp):
         if is_valid(link):
             # remove link fragments
             new_link= link.split('#')[0]
-            uniqueURLS.add(new_link)
+            uniqueURLS[new_link] = 1
             #print(text)
             #tokenize the words (call tokenize function from assignment1)
             result.append(new_link)
