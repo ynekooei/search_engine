@@ -43,3 +43,6 @@ with open('project2_stats.txt','w') as writer:
     writer.write("subdomains found: " + str(len(subdomains)) + "\n")
     for i in range(len(all_subdomains)):
         writer.write(str(all_subdomains[i]) + "\n")
+        
+        
+        hh
